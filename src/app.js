@@ -1,10 +1,21 @@
+require('dotenv').config();
 const express = require('express');
+const { setupSwagger } = require("./config/swagger");
+const schedulesRoutes = require('./routes/schedulesRoutes');
+const authRoutes = require('./routes/authRoutes');
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 app.use(express.urlencoded());
 
-const schedulesRoutes = require('./routes/schedulesRoutes');
 app.use('/schedules', schedulesRoutes);
+app.use('/api/auth', authRoutes);
+setupSwagger(app);
+
+app.get('/health', (req,res)=>{
+    res.json({status:'OK', timestamp: new Date().toISOString() });
+});
 
 // Middleware 404
 app.use((req, res, next) => {
@@ -21,5 +32,16 @@ app.use((err, req, res, next) => {
         message,
     });
 });
+app.listen(PORT, () => console.log(`Server berjalan di port ${PORT} \nSwagger UI di: http://localhost:${PORT}/apidocs`));
 
 module.exports = app;
+
+
+
+
+
+
+
+
+
+
