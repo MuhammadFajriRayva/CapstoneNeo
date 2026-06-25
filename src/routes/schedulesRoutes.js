@@ -12,7 +12,7 @@ const router = express.Router();
 // GET /schedules - Ambil semua jadwal
 /**
 * @swagger
-* /api/books:
+* /api/schedules:
 *   get:
 *       tags: [Schedules]
 *       summary: Lihat semua jadwal (publik)
@@ -124,7 +124,7 @@ router.post("/", authenticate, createSchedules);
 */
 router.put("/:id", authenticate, updateSchedules);
 
-// DELETE /schedules/:id - Hapus buku
+// DELETE /schedules/:id - Hapus Jadwal
 /**
 * @swagger
 * /api/schedules/{id}:

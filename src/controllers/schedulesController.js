@@ -10,7 +10,7 @@ const getAllSchedules = async (req, res) => {
  res.status(500).json({ status: "error", message: error.message });
  }
 };
-//GET /schedules/:id — Ambil Satu Buku Berdasarkan ID
+//GET /schedules/:id — Ambil Satu Jadwal Berdasarkan ID
 const getSchedulesById = async (req, res) => {
  try {
  const { id } = req.params;
@@ -25,16 +25,16 @@ const getSchedulesById = async (req, res) => {
  res.status(500).json({ status: "error", message: error.message });
  }
 };
-//POST /schedules — Tambah Buku Baru
+//POST /schedules — Tambah Jadwal Baru
 const createSchedules = async (req, res) => {
  try {
  const { name, hari, jamMulai, jamSelesai } = req.body;
  const newSchedules = await prisma.schedules.create({
  data: {
- name,
- hari,
- jamMulai,
- jamSelesai,
+    name,
+    hari,
+    jamMulai,
+    jamSelesai,
  },
  });
  res.status(201).json({ status: "success", data: newSchedules });
@@ -42,7 +42,7 @@ const createSchedules = async (req, res) => {
  res.status(500).json({ status: "error", message: error.message });
  }
 };
-//PUT /schedules/:id — Perbarui Data Buku
+//PUT /schedules/:id — Perbarui Jadwal
 const updateSchedules = async (req, res) => {
  try {
  const { id } = req.params;
@@ -60,7 +60,7 @@ const updateSchedules = async (req, res) => {
  res.status(500).json({ status: "error", message: error.message });
  }
 };
-//DELETE /books/:id — Hapus Buku
+//DELETE /books/:id — Hapus Jadwal
 const deleteSchedules = async (req, res) => {
  try {
  const { id } = req.params;

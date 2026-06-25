@@ -1,13 +1,7 @@
 const {z} = require("zod");
 
-const loginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(8),
-});
-
-const roleEnum = z.enum(["USER","MODERATOR"]);
-
 const registerSchema = z.object({
+    name: z.string().min(3,{message:"Nama minimal 3 karakter"}),
     email: z.string().email({message: "Format email tidak valid."}),
     password: z.string().min(8,{message:"Password minimal 8 karakter."}),
     role: z.enum(["USER","MODERATOR"],{

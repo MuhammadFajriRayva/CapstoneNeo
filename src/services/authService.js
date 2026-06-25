@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const userRepository = require('../repositories/userRepository');
 
 const authService = {
-    async register({email,password,role}) {
+    async register({name,email,password,role}) {
         const existingUser = await userRepository.findByEmail(email);
         if (existingUser) {
             throw new Error("EMAIL_ALREADY_EXISTS");
@@ -14,9 +14,9 @@ const authService = {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const newUser = await userRepository.create({email,password: hashedPassword,role: role || 'USER',});
+        const newUser = await userRepository.create({name,email,password: hashedPassword,role: role || 'USER',});
 
-        return {id: newUser.id, email: newUser.email, role: newUser.role};
+        return {name: newUser.name,userId: newUser.id, email: newUser.email, role: newUser.role};
     },
 
     async login({email, password}) {
@@ -83,7 +83,7 @@ const authService = {
 
         const accessToken = jwt.sign(
             {
-                id: user.id,
+                userId: user.id,
                 email: user.email,
                 role: user.role
             },

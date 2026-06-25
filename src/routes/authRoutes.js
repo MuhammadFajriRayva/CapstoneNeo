@@ -27,11 +27,11 @@ const {authenticate,authorize} = require("../middlewares/authMiddleware");
 *                           password:
 *                               type: string
 *                               example: password123
-*                           responses:
-*                               201:
-*                                   description: Registrasi berhasil
-*                               400:
-*                                   description: Validasi gagal atau email sudah terdaftar
+*       responses:
+*           201:
+*               description: Registrasi berhasil
+*           400:
+*               description: Validasi gagal atau email sudah terdaftar
 */
 
 router.post("/register",authController.register);
@@ -56,11 +56,11 @@ router.post("/register",authController.register);
 *                           password:
 *                               type: string
 *                               example: password123
-*                           responses:
-*                               200:
-*                                   description: Login berhasil, mengembalikan JWT token
-*                               401:
-*                                   description: Email atau password salah
+*       responses:
+*           200:
+*               description: Login berhasil, mengembalikan JWT token
+*           401:
+*               description: Email atau password salah
 */
 
 router.post("/login",authController.login);

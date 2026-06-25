@@ -19,7 +19,7 @@ const authController = {
             const user = await authService.register(validation.data);
             return res.status(201).json({message: "Registrasi berhasil.", data: user});
         } catch (error) {
-            if(error.message === 'EMAIL_ALREADY_EXIST'){
+            if(error.message === 'EMAIL_ALREADY_EXISTS'){
                 return res.status(409).json({message: "Email sudah terdaftar."});
             }
             if(error.message === 'FORBIDDEN_ROLE'){
@@ -55,7 +55,7 @@ const authController = {
         const validation = changePasswordSchema.safeParse(req.body);
         if (!validation.success) {
             return res.status(400).json({
-                errors: validation.errorerrors.map(e => ({
+                errors: validation.error.errors.map(e => ({
                     field: e.path.join("."),
                     message: e.message,
                 })),
@@ -63,7 +63,7 @@ const authController = {
         }
         try{
             const result = await authService.changePassword({
-                userId: req.user.userId,
+                userId: req.userId,
                 ...validation.data,   
             });
             return res.status(200).json(result);
@@ -89,7 +89,7 @@ const authController = {
 
     async logout(req,res) {
         try {
-            const result = await authService.logout(req.user.id);
+            const result = await authService.logout(req.userId);
             return res.status(200).json(result);
         } catch (error) {
             return res.status(500).json({message:error.message});

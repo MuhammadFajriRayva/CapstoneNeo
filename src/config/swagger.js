@@ -4,9 +4,9 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Buku API",
+            title: "Puskesmas API",
             version: "1.0.0",
-            description: "Dokumentasi API Aplikasi Manajemen Buku",
+            description: "Dokumentasi API Aplikasi Puskesmas",
         },
         servers: [{url: `http://localhost:${process.env.PORT || 3000}`,},],
         components: {
