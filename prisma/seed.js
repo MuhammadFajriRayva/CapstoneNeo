@@ -30,7 +30,7 @@ async function main() {
       spesialis: "Dokter Umum",
     },
   });
-  await prisma.schedules.createMany({
+  await prisma.schedule.createMany({
     data: [
       {
         dokterId: dokter.id,

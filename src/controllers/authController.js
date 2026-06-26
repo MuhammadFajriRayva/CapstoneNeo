@@ -63,7 +63,7 @@ const authController = {
         }
         try{
             const result = await authService.changePassword({
-                userId: req.userId,
+                userId: req.user.userId,
                 ...validation.data,   
             });
             return res.status(200).json(result);
@@ -89,7 +89,7 @@ const authController = {
 
     async logout(req,res) {
         try {
-            const result = await authService.logout(req.userId);
+            const result = await authService.logout(req.user.userId);
             return res.status(200).json(result);
         } catch (error) {
             return res.status(500).json({message:error.message});

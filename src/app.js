@@ -15,7 +15,7 @@ app.use('/api/schedules', schedulesRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/konsultasi', konsultasiRoutes);
 app.use('/api/dokter', dokterRoutes);
-app.use('/api/pasien/profile', pasienRoutes);
+app.use('/api/pasien', pasienRoutes);
 setupSwagger(app);
 
 app.get('/health', (req,res)=>{

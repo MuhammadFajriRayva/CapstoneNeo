@@ -18,7 +18,6 @@ const pasienController = {
     }
 
     try {
-
       const result = await pasienService.createProfile(
         req.user.userId,
         validation.data

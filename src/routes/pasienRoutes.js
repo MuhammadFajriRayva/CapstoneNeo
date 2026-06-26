@@ -35,7 +35,7 @@ router.post("/profile", authenticate, pasienController.createProfile);
  *     security:
  *       - BearerAuth: []
  *     summary: Get all pasien
- *     response:
+ *     responses:
  *       200:
  *         description: Profil berhasil diambil
  */
@@ -43,7 +43,7 @@ router.get("/profile", authenticate, pasienController.getProfile);
 
 /**
  * @swagger
- * /api/pasien/{id}:
+ * /api/pasien/profile:
  *   put:
  *     tags: [Pasien]
  *     security:

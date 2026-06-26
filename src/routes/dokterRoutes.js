@@ -17,7 +17,7 @@ router.get("/", dokterController.getAllDokter);
 
 /**
  * @swagger
- * /api/dokter{id}:
+ * /api/dokter/{id}:
  *   get:
  *     tags: [Dokter]
  *     summary: Lihat satu dokter

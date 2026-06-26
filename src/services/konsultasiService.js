@@ -15,7 +15,7 @@ const konsultasiService = {
     }
 
     // 2. Validasi jadwal
-    const jadwal = await prisma.schedules.findUnique({
+    const jadwal = await prisma.schedule.findUnique({
       where: { id: data.jadwalId },
     });
 
@@ -29,7 +29,7 @@ const konsultasiService = {
       jadwalId: data.jadwalId,
       tanggal: new Date(data.tanggal),
       keluhan: data.keluhan,
-      status: "Menunggu",
+      status: "MENUNGGU",
     });
   },
 
@@ -43,7 +43,7 @@ const konsultasiService = {
       throw new Error("PROFILE_NOT_FOUND");
     }
 
-    return konsultasiRepository.findAllByPasienId(pasien.id);
+    return konsultasiRepository.findByPasienId(pasien.id);
   },
 
   async getKonsultasiById(userId, id) {

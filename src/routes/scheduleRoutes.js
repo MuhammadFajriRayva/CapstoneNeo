@@ -16,16 +16,24 @@ const { authenticate, authorize } = require("../middlewares/authMiddleware");
  */
 router.get("/", scheduleController.getAllSchedules);
 
-/**
- * @swagger
- * /api/schedules/{id}:
- *   get:
- *     tags: [Schedule]
- *     summary: Lihat semua jadwal dokter
- *     responses:
- *       200:
- *         description: OK
- */
+/**                                                                                                      
+ * @swagger                                                                                              
+ * /api/schedules/{id}:                                                                                  
+ *   get:                                                                                                
+ *     tags: [Schedule]                                                                                  
+ *     summary: Lihat detail jadwal dokter                                                               
+ *     parameters:                                                                                       
+ *       - in: path                                                                                      
+ *         name: id                                                                                      
+ *         required: true                                                                                
+ *         description: ID jadwal dokter yang dicari                                                     
+ *         schema:                                                                                       
+ *           type: integer                                                                               
+ *           example: 1                                                                                  
+ *     responses:                                                                                        
+ *       200:                                                                                            
+ *         description: OK                                                                               
+ */                                                                                                      
 router.get("/:id", scheduleController.getScheduleById);
 
 // ADMIN ONLY

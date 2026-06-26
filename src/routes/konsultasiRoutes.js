@@ -26,15 +26,22 @@ const { authenticate, authorize } = require("../middlewares/authMiddleware");
  */
 router.post("/", authenticate, authorize("PASIEN"), konsultasiController.create);
 
-/**
- * @swagger
- * /api/konsultasi:
- *   get:
- *     tags: [Konsultasi]
- *     security:
- *       - BearerAuth: []
- *     summary: Get all konsultasi
- */
+/**                                                                                                      
+ * @swagger                                                                                              
+ * /api/konsultasi:                                                                                      
+ *   get:                                                                                                
+ *     tags: [Konsultasi]                                                                                
+ *     security:                                                                                         
+ *       - BearerAuth: []                                                                                
+ *     summary: Dapatkan riwayat daftar konsultasi pasien yang login                                     
+ *     responses:                                                                                        
+ *       200:                                                                                            
+ *         description: Daftar konsultasi berhasil diambil                                               
+ *       401:                                                                                            
+ *         description: Token tidak valid atau tidak menyertakan token                                   
+ *       403:                                                                                            
+ *         description: Akses ditolak. Hanya pasien yang boleh mengakses.                                
+ */                                                                                                      
 router.get("/", authenticate, authorize("PASIEN"), konsultasiController.getAll);
 
 /**
@@ -60,7 +67,7 @@ router.get("/:id", authenticate, authorize("PASIEN"), konsultasiController.getBy
 
 /**
  * @swagger
- * /api/Konsultasi/{id}:
+ * /api/konsultasi/{id}/status:
  *   patch:
  *     tags: [Konsultasi]
  *     security:
@@ -69,10 +76,10 @@ router.get("/:id", authenticate, authorize("PASIEN"), konsultasiController.getBy
  *     parameters:
  *       - in: path
  *         name: id
- *           required: true
- *           schema:
- *               type: integer
- *               example: 1
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
  */
 router.patch("/:id/status", authenticate, authorize("ADMIN", "DOKTER"), konsultasiController.updateStatus);
 

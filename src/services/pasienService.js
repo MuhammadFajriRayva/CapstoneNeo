@@ -42,7 +42,7 @@ const pasienService = {
       throw new Error("PROFILE_NOT_FOUND");
     }
 
-    return pasienRepository.update(userId, {
+    return pasienRepository.update(profile.id, {
       nik: data.nik,
       tanggalLahir: new Date(data.tanggalLahir),
       alamat: data.alamat,

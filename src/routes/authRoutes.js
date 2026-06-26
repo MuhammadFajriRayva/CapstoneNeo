@@ -89,6 +89,36 @@ router.post("/refresh-token", authController.refreshToken);
 
 /**
  * @swagger
+ * /api/auth/change-password:
+ *   put:
+ *     summary: Mengubah password user yang sedang login
+ *     tags: [Auth]
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [oldPassword, newPassword]
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 example: password123
+ *               newPassword:
+ *                 type: string
+ *                 example: newpassword123
+ *     responses:
+ *       200:
+ *         description: Password berhasil diubah
+ *       401:
+ *         description: Password lama salah
+ */
+router.put("/change-password", authenticate, authController.changePassword);
+
+/**
+ * @swagger
  * /api/auth/logout:
  *   post:
  *     summary: Logout
