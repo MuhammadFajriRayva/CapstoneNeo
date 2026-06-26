@@ -76,10 +76,10 @@ const konsultasiService = {
     }
 
     const allowedStatus = [
-      "Menunggu",
-      "Dikonfirmasi",
-      "Selesai",
-      "Dibatalkan",
+      "MENUNGGU",
+      "DIKONFIRMASI",
+      "SELESAI",
+      "DIBATALKAN",
     ];
 
     if (!allowedStatus.includes(status)) {

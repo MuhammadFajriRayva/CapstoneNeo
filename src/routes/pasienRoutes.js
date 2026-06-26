@@ -49,13 +49,6 @@ router.get("/profile", authenticate, pasienController.getProfile);
  *     security:
  *       - BearerAuth: []
  *     summary: Update pasien
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *           example: 1
  *     requestBody:
  *       required: true
  *       content:
