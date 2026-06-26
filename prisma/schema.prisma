@@ -1,36 +1,119 @@
 generator client {
- provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
+
 datasource db {
- provider = "mysql"
- url = env("DATABASE_URL")
-}
-model schedules {
-  id          Int     @id @default(autoincrement())
-  name        String
-  hari        String
-  jamMulai    String
-  jamSelesai  String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  @@map("schedules")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-enum Role{
-    ADMIN
-    USER
-    MODERATOR
+enum Role {
+  ADMIN
+  DOKTER
+  PASIEN
 }
 
-model User{
-  id            Int         @id @default(autoincrement())
-  name          String
-  email         String      @unique
-  password      String
-  role          Role        @default(USER)
-  refreshToken  String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  
-  @@map("users")    
+enum StatusKonsultasi {
+  MENUNGGU
+  DIKONFIRMASI
+  SELESAI
+  DIBATALKAN
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  name         String
+  email        String   @unique
+  password     String
+  role         Role
+  refreshToken String?
+
+  dokter Dokter?
+  pasien Pasien?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dokter {
+
+  id         Int    @id @default(autoincrement())
+  userId     Int    @unique
+
+  user       User   @relation(fields:[userId], references:[id], onDelete:Cascade)
+
+  spesialis  String
+  noHP       String
+
+  schedules  Schedule[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Pasien {
+
+  id Int @id @default(autoincrement())
+
+  userId Int @unique
+
+  user User @relation(fields:[userId], references:[id], onDelete:Cascade)
+
+  nik String @unique
+
+  tanggalLahir DateTime
+
+  alamat String
+
+  noHP String
+
+  konsultasi Konsultasi[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Schedule{
+
+  id Int @id @default(autoincrement())
+
+  dokterId Int
+
+  dokter Dokter @relation(fields:[dokterId], references:[id], onDelete:Cascade)
+
+  hari String
+
+  jamMulai String
+
+  jamSelesai String
+
+  konsultasi Konsultasi[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model Konsultasi{
+
+  id Int @id @default(autoincrement())
+
+  pasienId Int
+
+  jadwalId Int
+
+  pasien Pasien @relation(fields:[pasienId], references:[id], onDelete:Cascade)
+
+  jadwal Schedule @relation(fields:[jadwalId], references:[id], onDelete:Cascade)
+
+  tanggal DateTime
+
+  keluhan String
+
+  status StatusKonsultasi @default(MENUNGGU)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
 }

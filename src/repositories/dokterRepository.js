@@ -1,0 +1,62 @@
+// src/repositories/authRepository.js
+
+const prisma = require("../config/prisma");
+
+const authRepository = {
+  async findByEmail(email) {
+    return prisma.user.findUnique({
+      where: { email },
+    });
+  },
+
+  async findById(id) {
+    return prisma.user.findUnique({
+      where: { id },
+      include: {
+        dokter: true,
+        pasien: true,
+      },
+    });
+  },
+
+  async create(data) {
+    return prisma.user.create({
+      data,
+    });
+  },
+
+  async update(id, data) {
+    return prisma.user.update({
+      where: { id },
+      data,
+    });
+  },
+
+  async saveRefreshToken(id, refreshToken) {
+    return prisma.user.update({
+      where: { id },
+      data: {
+        refreshToken,
+      },
+    });
+  },
+
+  async removeRefreshToken(id) {
+    return prisma.user.update({
+      where: { id },
+      data: {
+        refreshToken: null,
+      },
+    });
+  },
+
+  async findByRefreshToken(refreshToken) {
+    return prisma.user.findFirst({
+      where: {
+        refreshToken,
+      },
+    });
+  },
+};
+
+module.exports = authRepository;

@@ -35,7 +35,7 @@ const authController = {
             return res.status(400).json({
                 message: 'Validasi gagal.',
                 errors: validation.error.errors.map(e => ({
-                    field: e.path.json("."),
+                    field: e.path.join("."),
                     message: e.message,
                 })),
             });

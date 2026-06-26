@@ -1,8 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const { setupSwagger } = require("./config/swagger");
-const schedulesRoutes = require('./routes/schedulesRoutes');
+const schedulesRoutes = require('./routes/scheduleRoutes');
 const authRoutes = require('./routes/authRoutes');
+const konsultasiRoutes = require('./routes/konsultasiRoutes');
+const dokterRoutes = require('./routes/dokterRoutes');
+const pasienRoutes = require('./routes/pasienRoutes');
 const app = express();
 
 app.use(express.json());
@@ -10,6 +13,9 @@ app.use(express.urlencoded());
 
 app.use('/api/schedules', schedulesRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/konsultasi', konsultasiRoutes);
+app.use('/api/dokter', dokterRoutes);
+app.use('/api/pasien/profile', pasienRoutes);
 setupSwagger(app);
 
 app.get('/health', (req,res)=>{

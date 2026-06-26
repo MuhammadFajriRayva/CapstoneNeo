@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const authController = require("../controllers/authController");
-const {authenticate,authorize} = require("../middlewares/authMiddleware");
+const {authenticate} = require("../middlewares/authMiddleware");
 
 /**
 * @swagger
@@ -20,10 +20,10 @@ const {authenticate,authorize} = require("../middlewares/authMiddleware");
 *                       properties:
 *                           name:
 *                               type: string
-*                               example: Sheva Arafah
+*                               example: Fajri Rayva
 *                           email:
 *                               type: string
-*                               example: sheva@example.com
+*                               example: fajri@example.com
 *                           password:
 *                               type: string
 *                               example: password123
@@ -52,7 +52,7 @@ router.post("/register",authController.register);
 *                       properties:
 *                           email:
 *                               type: string
-*                               example: sheva@example.com
+*                               example: fajri@example.com
 *                           password:
 *                               type: string
 *                               example: password123
@@ -62,29 +62,42 @@ router.post("/register",authController.register);
 *           401:
 *               description: Email atau password salah
 */
-
 router.post("/login",authController.login);
 
-router.post("/token/refresh",authController.refreshToken);
+/**
+ * @swagger
+ * /api/auth/refresh-token:
+ *   post:
+ *     summary: Mendapatkan access token baru
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Access token baru berhasil dibuat
+ */
+router.post("/refresh-token", authController.refreshToken);
 
-router.post("/logout",authenticate,authController.logout);
-
-router.get("/profile",authenticate,(req, res) => {
-    res.json({message: `Selamat datang!`,user: req.user});
-});
-
-router.get("/admin",authenticate,authorize("ADMIN"),(req, res) => {
-    res.json({message: "Selamat datang admin"});
-});
-
-router.put("/profile/change-password",authenticate,authController.changePassword);
-
-router.get("/admin/dashboard",authenticate,authorize("ADMIN"),(req, res) => {
-    res.json({message:"Dashboard admin."});
-});
-
-router.get('/content/review',authenticate,authorize("ADMIN","MODERATOR"),(req,res) => { 
-    res.json({message: "Halaman review konten."});
-});
-
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Logout
+ *     tags: [Auth]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Logout berhasil
+ */
+router.post("/logout", authenticate, authController.logout);
 module.exports = router;

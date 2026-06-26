@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const userRepository = require('../repositories/userRepository');
+const userRepository = require('../repositories/authRepository');
 
 const authService = {
     async register({name,email,password,role}) {
@@ -9,12 +9,12 @@ const authService = {
             throw new Error("EMAIL_ALREADY_EXISTS");
         }
 
-        if (role === 'ADMIN'){
+        if (role === 'ADMIN'  || role === 'DOKTER'){
             throw new Error('FORBIDDEN_ROLE');
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const newUser = await userRepository.create({name,email,password: hashedPassword,role: role || 'USER',});
+        const newUser = await userRepository.create({name,email,password: hashedPassword,role: role || 'PASIEN',});
 
         return {name: newUser.name,userId: newUser.id, email: newUser.email, role: newUser.role};
     },

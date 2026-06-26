@@ -1,6 +1,6 @@
 const prisma = require('../config/prisma');
 
-const userRepository = {
+const authRepository = {
     async findByEmail(email){
         return prisma.user.findUnique({where:{email}});
     },
@@ -22,4 +22,4 @@ const userRepository = {
     },
 };
 
-module.exports = userRepository;
+module.exports = authRepository;
